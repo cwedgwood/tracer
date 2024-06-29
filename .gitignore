@@ -1,0 +1,7 @@
+*~
+
+# do no check this in, it's intended to be per-environment
+cover-publish
+
+tracer.html
+tracer.out
