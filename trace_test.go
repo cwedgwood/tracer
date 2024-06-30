@@ -95,13 +95,13 @@ func TestLoggerError(t *testing.T) {
 
 // TestPresentTraceIdAndOrigin tests that the traceid and traceorigin are present in the context.
 func TestPresentTraceIdAndOrigin(t *testing.T) {
-	ctx := ContextLoggerWithTraceId(context.TODO(), newTestLogger(&bytes.Buffer{}), GenerateTraceId, "traceorigin")
+	ctx := ContextLoggerWithTraceId(context.TODO(), newTestLogger(&bytes.Buffer{}), GenerateTraceId, "origin.tester")
 	id, origin := TraceIdAndOrigin(ctx)
 	if id == "" {
 		t.Errorf("Expected non-empty traceid")
 	}
-	if origin != "traceorigin" {
-		t.Errorf("Expected traceorigin, got %s", origin)
+	if origin != "origin.tester" {
+		t.Errorf("Expected origin.tester, got %s", origin)
 	}
 }
 
