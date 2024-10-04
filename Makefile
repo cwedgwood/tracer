@@ -1,7 +1,7 @@
 
 
 .PHONY: default
-default: example-test
+default: verify
 
 .PHONY: verify
 verify:
