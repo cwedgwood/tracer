@@ -1,4 +1,4 @@
-// a minimalist tracing logger attached to a context.Context
+// a minimalist tracing logger attached to context.Context
 
 package tracer
 
@@ -22,8 +22,12 @@ const (
 
 func newtraceid() string { return "tr-" + uuid.New().String() }
 
-// ContextLoggerWithTraceId creates a new context with traceid and logr.Logger.  If a traceid is passed in that is used, if not then a
-// random value is generated.  If the optinoal traceorigin is specified it will also be present in the context and the logger.
+// ContextLoggerWithTraceId creates a new context with traceid and logr.Logger.
+//
+// If a non-empty traceid is provided that will be used, otherwise a random value is generated.
+//
+// If a non-empty traceorigin is specified it will also be present in the context and the logger.  This should be considered
+// optional.
 func ContextLoggerWithTraceId(parentContext context.Context, parentLogger logr.Logger, traceid, traceorigin string) context.Context {
 	if traceid == "" || traceid == GenerateTraceId {
 		traceid = newtraceid()
@@ -40,7 +44,7 @@ func ContextLoggerWithTraceId(parentContext context.Context, parentLogger logr.L
 	return logr.NewContext(tracingContext, tracingLogger)
 }
 
-// Return the traceid and traceorigin from the context, or empty strings if they are not present.
+// Return traceid and traceorigin from the context, or empty strings when not present.
 func TraceIdAndOrigin(tracingContext context.Context) (string, string) {
 	var traceid, traceorigin string
 	ta := tracingContext.Value(keytraceid)

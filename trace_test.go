@@ -36,7 +36,7 @@ func TestLoggerInfoFields(t *testing.T) {
 	logBuffer := &bytes.Buffer{}
 	ctx := ContextLoggerWithTraceId(context.TODO(), newTestLogger(logBuffer), GenerateTraceId, "info-tester")
 
-	// this is how most users of the context will consume it and use it
+	// this is how most code will use the logger
 	log := logr.FromContextOrDiscard(ctx)
 	log.Info("something1")
 
@@ -73,7 +73,7 @@ func TestLoggerError(t *testing.T) {
 	logBuffer := &bytes.Buffer{}
 	ctx := ContextLoggerWithTraceId(context.TODO(), newTestLogger(logBuffer), GenerateTraceId, "error-tester")
 
-	// this is how most users of the context will consume it and use it
+	// this is how most code will use the logger
 	log := logr.FromContextOrDiscard(ctx)
 	log.Error(errors.New("testerror"), "error testing")
 
@@ -105,7 +105,7 @@ func TestPresentTraceIdAndOrigin(t *testing.T) {
 	}
 }
 
-// TestMissingTraceIdAndOrigin tests that the traceid and traceorigin are not present in the context and that we do not panic.
+// TestMissingTraceIdAndOrigin tests that the traceid and traceorigin are NOT present in the context AND that we do not panic.
 func TestMissingTraceIdAndOrigin(t *testing.T) {
 	ctx := context.TODO()
 	id, origin := TraceIdAndOrigin(ctx)
